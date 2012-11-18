@@ -1,0 +1,84 @@
+Curl sample calls
+=================
+
+Get Leopoldsgasse from Vienna
+curl "http://maps.google.com/maps/api/geocode/json?address=Leopoldsgasse&language=de&components=country:Austria|administrative_area:Wien&sensor=false"
+
+Result:
+
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Leopoldsgasse",
+               "short_name" : "Leopoldsgasse",
+               "types" : [ "point_of_interest", "establishment" ]
+            },
+            {
+               "long_name" : "18",
+               "short_name" : "18",
+               "types" : [ "street_number" ]
+            },
+            {
+               "long_name" : "Leopoldsgasse",
+               "short_name" : "Leopoldsgasse",
+               "types" : [ "route" ]
+            },
+            {
+               "long_name" : "Leopoldstadt",
+               "short_name" : "Leopoldstadt",
+               "types" : [ "sublocality", "political" ]
+            },
+            {
+               "long_name" : "Wien",
+               "short_name" : "Wien",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Wien",
+               "short_name" : "Wien",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "├ûsterreich",
+               "short_name" : "AT",
+               "types" : [ "country", "political" ]
+            },
+            {
+               "long_name" : "1020",
+               "short_name" : "1020",
+               "types" : [ "postal_code" ]
+            }
+         ],
+         "formatted_address" : "Leopoldsgasse, 18, 1020 Wien, ├ûsterreich",
+         "geometry" : {
+            "location" : {
+               "lat" : 48.2196460,
+               "lng" : 16.37656490
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 48.22707980,
+                  "lng" : 16.39257230
+               },
+               "southwest" : {
+                  "lat" : 48.21221120,
+                  "lng" : 16.36055750
+               }
+            }
+         },
+         "types" : [ "point_of_interest", "establishment" ]
+      }
+   ],
+   "status" : "OK"
+}
+
+
+Nothing found result
+
+{
+   "results" : [],
+   "status" : "ZERO_RESULTS"
+}
