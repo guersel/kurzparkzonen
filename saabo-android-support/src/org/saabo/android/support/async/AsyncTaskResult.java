@@ -1,14 +1,15 @@
 package org.saabo.android.support.async;
 
 /**
- * Use this class in AsyncTask to handle response and exception handling.
- * 
+ * Use this class in async tasks to handle response and exception handling.
+ *  
  * @author guersel
  *
  * @param <T> The response type of the AsyncTask
  */
 public class AsyncTaskResult<T> {
 	
+	/** Result type of the task. **/
 	private T result;
 	private Exception exception;
 	

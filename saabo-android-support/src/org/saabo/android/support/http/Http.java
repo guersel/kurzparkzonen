@@ -15,22 +15,18 @@ import java.net.URL;
  */
 public class Http {	
 	
+	/** The target http address. **/
 	protected URL url;
 	protected HttpURLConnection connection;
 	
-	/**
-	 * Constructor.
-	 * @param url the address
-	 * @throws MalformedURLException
-	 */
-	public Http(String url) throws MalformedURLException {
+	public Http(final String url) throws MalformedURLException {
 		this.url = new URL(url);
 	}
 	
 	/**
 	 * Make a GET request.
-	 * @return the response of the GET request
-	 * @throws IOException
+	 * @return The response of the GET request
+	 * @throws IOException if an error occurs
 	 */
 	public byte[] doGet() throws IOException {
 		connection = (HttpURLConnection) url.openConnection();
@@ -43,8 +39,13 @@ public class Http {
 		}
 	}
 
-	// Generel method to read from an InputStream
-	protected byte[] readStream(InputStream is) throws IOException {
+	/**
+	 * Put data from an <code>InputStream</code> to a <code>byte[]</code>.
+	 * @param is The <code>InputStream</code> as source
+	 * @return Contains data from the <code>InputStream</code>
+	 * @throws IOException if an error occurs
+	 */
+	protected byte[] readStream(final InputStream is) throws IOException {
 		ByteArrayOutputStream bao = new ByteArrayOutputStream(1024);
 		byte[] buffer = new byte[1024];
 		int result = 0;

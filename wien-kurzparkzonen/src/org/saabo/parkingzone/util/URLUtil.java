@@ -1,20 +1,25 @@
 package org.saabo.parkingzone.util;
 
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.util.Locale;
 
-import org.saabo.android.support.http.Http;
 import org.saabo.android.support.setting.SharedPreferencesUtil;
 import org.saabo.parkingzone.Constants;
 import org.saabo.parkingzone.ParkingzoneApplication;
 
-import com.google.android.maps.GeoPoint;
-
 import android.util.Log;
 
-public class URLUtil {
+import com.google.android.maps.GeoPoint;
+
+/**
+ * URL utility class.
+ * @author guersel
+ *
+ */
+public final class URLUtil {
+	
+	private URLUtil() {}
 	
 	private static final String TAG = URLUtil.class.getName();
 	
@@ -23,7 +28,7 @@ public class URLUtil {
 	 * @param address The name of the street in vienna
 	 * @return The Google geocode webservice url
 	 */
-	public static String getAddressUrl(String address) {
+	public static String getAddressUrl(final String address) {
 		if (address == null || "".equals(address.trim())) {
 			throw new IllegalArgumentException("Address must not be null or empty.");
 		}

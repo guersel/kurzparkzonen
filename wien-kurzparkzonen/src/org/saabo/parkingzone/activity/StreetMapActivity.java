@@ -72,7 +72,9 @@ public class StreetMapActivity extends MapActivity {
     	mapView.getOverlays().add(myLocationOverlay);
     }
     
-    // This method will display the search dialog
+    /**
+     *  This method will display the search dialog.
+     */
     @Override
     public boolean onSearchRequested() {
     	return super.onSearchRequested();
@@ -107,7 +109,12 @@ public class StreetMapActivity extends MapActivity {
     	controller.handleAddressUpdateIntent(intent);
     }
     
-    public void updateMapPosition(GeoPoint geoPoint, int zoomLevel) {
+    /**
+     * Will be called by the controller.
+     * @param geoPoint The <code>GeoPoint</code> data holds latitude and longitude information
+     * @param zoomLevel The zoom level of the map view
+     */
+    public void updateMapPosition(final GeoPoint geoPoint, final int zoomLevel) {
 		mapController.animateTo(geoPoint);
     	mapController.setZoom(zoomLevel);
 	}
@@ -122,15 +129,21 @@ public class StreetMapActivity extends MapActivity {
     	
     }
     
+    /**
+     * Will be called by the controller.
+     */
     public void showProgressDialog() {
 		dismissProgressDialog();
 		progressDialog = ProgressDialog.show(this, "Search", "search for parkzone areas");
 	}
     
+    /**
+     * Will be called by the controller on succes.
+     */
     public void onUpdateSuccess() {
     	dismissProgressDialog();
     }
-    
+   
     private void dismissProgressDialog() {
 		if (progressDialog != null && progressDialog.isShowing()) {
 			progressDialog.dismiss();

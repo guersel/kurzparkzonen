@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class AddressModel implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private String streetname = "";
 	private String streetnumber = "";
 	private String locality = "";

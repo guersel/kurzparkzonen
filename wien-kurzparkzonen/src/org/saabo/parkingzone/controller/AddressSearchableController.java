@@ -24,6 +24,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+/**
+ * Controller of the address search view (activity).
+ */
 public class AddressSearchableController {
 	
 	private static final String TAG = AddressSearchableController.class.getName();
@@ -35,7 +38,11 @@ public class AddressSearchableController {
 		this.view = view;
 	}
 
-	public void handleIntent(Intent intent) {
+	/**
+	 * Will be called by the <code>AddressSearchableActivity</code>
+	 * @param intent The <code>Intent</code> object which waked up the activity
+	 */
+	public void handleIntent(final Intent intent) {
 		Log.d(TAG, "handleIntent()");
 		
 		String action = intent.getAction();
@@ -62,7 +69,11 @@ public class AddressSearchableController {
 		}
 	}
 	
-	public void onListItemClick(int position) {
+	/**
+	 * Will be called when the user touches an item on the list view.
+	 * @param position The item position which was clicked by the user
+	 */
+	public void onListItemClick(final int position) {
 		AddressModel selectedAddress = addressModel.getAddresses().get(position);
 		
 		Intent intent = new Intent(view, StreetMapActivity.class);
@@ -71,15 +82,29 @@ public class AddressSearchableController {
 		view.startActivity(intent);
 	}
 	
-	private void searchForAddress(String address) {
+	/**
+	 * Prepare asynchronous search task. 
+	 * @param address The address which should be searched for
+	 */
+	private void searchForAddress(final String address) {
 		AddressSearchTask searchTask = new AddressSearchTask();
 		
 		view.showProgressDialog();
 		searchTask.execute(address);
 	}
 	
+	/**
+	 * The asynchronous task for searching addresses.<br />
+	 * This task calls the google geocode service to get address information.
+	 * @author guersel
+	 *
+	 */
 	private class AddressSearchTask extends AsyncTask<String, Void, AsyncTaskResult<GeocodeResponseModel>> {
 
+		/**
+		 * This method will be called after the method <code>execute</code> was called.<br />
+		 * Don't forget that this mehtod runs in an own thread, so user interface calls should be prevented.
+		 */
 		@Override
 		protected AsyncTaskResult<GeocodeResponseModel> doInBackground(String... address) {
 			GeocodeResponseModel  geocodeModel = null;
@@ -102,6 +127,10 @@ public class AddressSearchableController {
 			return new AsyncTaskResult<GeocodeResponseModel>(geocodeModel);
 		}
 
+		/**
+		 * This method will be called after the asynchronous task is finished.<br />
+		 * Calls on the ui-thread can be done here.
+		 */
 		@Override
 		protected void onPostExecute(AsyncTaskResult<GeocodeResponseModel> result) {
 			super.onPostExecute(result);

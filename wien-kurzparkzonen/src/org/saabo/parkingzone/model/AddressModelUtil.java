@@ -14,7 +14,7 @@ import android.util.Log;
  * @author guersel
  *
  */
-public class AddressModelUtil {
+public final class AddressModelUtil {
 	
 	private static final String TAG = AddressModel.class.getName();
 	
@@ -23,7 +23,7 @@ public class AddressModelUtil {
 	 * @param geocodeResponse
 	 * @return
 	 */
-	public static List<AddressModel> getAddressModels(GeocodeResponseModel geocodeResponse) {
+	public static List<AddressModel> getAddressModels(final GeocodeResponseModel geocodeResponse) {
 		Log.d(TAG, "Get address models from GeocodeResponseModel");
 		
 		if (geocodeResponse != null && geocodeResponse.results.size() > 0) {

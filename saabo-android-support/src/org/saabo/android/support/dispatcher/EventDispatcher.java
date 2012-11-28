@@ -8,6 +8,11 @@ import org.saabo.android.support.event.EventListener;
 
 import android.util.Log;
 
+/**
+ * Model classes should extend this class to be observable by other objects.
+ * @author guersel
+ *
+ */
 public class EventDispatcher implements Dispatcher {
 
 	private static final String TAG = EventDispatcher.class.getName();
@@ -18,13 +23,18 @@ public class EventDispatcher implements Dispatcher {
 		this(null);
 	}
 	
-	public EventDispatcher(Dispatcher target) {
+	public EventDispatcher(final Dispatcher target) {
 		listenerMap = new HashMap<String, CopyOnWriteArrayList<EventListener>>();
 		this.target = (target != null) ? target : this;
 	}
 	
+	/**
+	 * Register an object as an event <code>listener</code>.
+	 * @param type The event type on which the listener listens
+	 * @param listener The event listener object
+	 */
 	@Override
-	public void addEventListener(String type, EventListener listener) {
+	public final void addEventListener(final String type, final EventListener listener) {
 		if (type == null || listener == null) {
 			Log.e(TAG, "Arguments type and listener must not null.");
 			return;
@@ -42,8 +52,13 @@ public class EventDispatcher implements Dispatcher {
 		}
 	}
 
+	/**
+	 * Remove the <code>listener</code> for the certain <code>type</code> of event.
+	 * @param type The event type on which the listener listens
+	 * @param listener The event listener object
+	 */
 	@Override
-	public void removeEventListener(String type, EventListener listener) {
+	public final void removeEventListener(final String type, final EventListener listener) {
 		if (type == null || listener == null) {
 			Log.e(TAG, "Arguments type and listener must not null.");
 			return;
@@ -64,8 +79,12 @@ public class EventDispatcher implements Dispatcher {
 		
 	}
 	
+	/**
+	 * Dispatch an <code>event</code> to all listeners which listens on the occured event.
+	 * @param event The occured event
+	 */
 	@Override
-	public void dispatchEvent(Event event) {
+	public final void dispatchEvent(final Event event) {
 		if (event == null) {
 			throw new IllegalArgumentException("Argument event must not null.");
 		}
@@ -88,8 +107,13 @@ public class EventDispatcher implements Dispatcher {
 		}
 	}
 
+	/**
+	 * Check if an <code>listener</code> is registered for the certain <code>type</code> of event.
+	 * @param type The event type on which the listener listens
+	 * @param listener The event listener object
+	 */
 	@Override
-	public boolean hasEventListener(String type, EventListener listener) {
+	public final boolean hasEventListener(final String type, final EventListener listener) {
 		if (type == null || listener == null) {
 			Log.e(TAG, "Arguments type and listener must not null.");
 			return false;

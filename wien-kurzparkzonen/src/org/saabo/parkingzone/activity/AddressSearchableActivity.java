@@ -22,7 +22,7 @@ import android.widget.ArrayAdapter;
  * This activity provides address search capabilities for the whole application.
  * @author guersel
  */
-public class AddressSearchableActivity extends ListActivity implements AddressSearchableView {
+public class AddressSearchableActivity extends ListActivity {
 	
 	private static final String TAG = AddressSearchableActivity.class.getName();
 	private List<AddressModel> addresses = new ArrayList<AddressModel>();
@@ -78,20 +78,39 @@ public class AddressSearchableActivity extends ListActivity implements AddressSe
 		controller.handleIntent(intent);	
 	}
 	
+	/**
+	 * Will be called by the controller on success.
+	 */
 	public void onSearchSuccess() {
 		dismissProgressDialog();
 	}
 	
-	public void onError(int resId) {
+	/**
+	 * Will be called by the controller on error.
+	 * @param resId The resource id of the error message
+	 */
+	public void onError(final int resId) {
 		MessageHelper.showShortMessage(this, resId);
 		finish();
 	}
 	
+	/**
+	 * Shows the progress dialog on screen.
+	 */
 	public void showProgressDialog() {
 		dismissProgressDialog();
 		progressDialog = new ProgressDialog(this).show(this, "Search", "search for address");
 	}
 	
+	/**
+	 * If progress dialog is still visible then destroy it.
+	 */
+	private void dismissProgressDialog() {
+		if (progressDialog != null && progressDialog.isShowing()) {
+			progressDialog.dismiss();
+			progressDialog = null;
+		}
+	}
 	
 	@Override
 	protected void onDestroy() {
@@ -101,13 +120,6 @@ public class AddressSearchableActivity extends ListActivity implements AddressSe
 	
 		super.onDestroy();
 		
-	}
-	
-	private void dismissProgressDialog() {
-		if (progressDialog != null && progressDialog.isShowing()) {
-			progressDialog.dismiss();
-			progressDialog = null;
-		}
 	}
 
 	// Getter and setter

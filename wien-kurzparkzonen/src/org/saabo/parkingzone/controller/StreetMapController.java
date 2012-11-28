@@ -39,7 +39,7 @@ public class StreetMapController {
 	 * Handle intent calls.
 	 * @param intent
 	 */
-	public void handleAddressUpdateIntent(Intent intent) {
+	public void handleAddressUpdateIntent(final Intent intent) {
 		Bundle bundle = intent.getExtras();
     	if (bundle != null) {
     		AddressModel address = (AddressModel) bundle.getSerializable(StreetMapActivity.INTENT_PARAM_ADDRESS);
