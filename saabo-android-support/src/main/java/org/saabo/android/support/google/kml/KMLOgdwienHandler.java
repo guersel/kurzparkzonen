@@ -13,7 +13,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.graphics.Color;
 
-import com.google.android.maps.GeoPoint;
+import com.google.android.gms.maps.model.LatLng;
 
 public class KMLOgdwienHandler extends DefaultHandler {
 	
@@ -103,24 +103,24 @@ public class KMLOgdwienHandler extends DefaultHandler {
 		} else if (localName.equals("coordinates")) {
 			if (Boolean.TRUE.equals(tags.get("Point"))) {
 				String[] values = value.trim().split(",");
-				placemark.multiGeometry.point.coordinates = new GeoPoint((int) (Double.valueOf(values[0]) * 1E6), (int) (Double.valueOf(values[1]) * 1E6));
+				placemark.multiGeometry.point.coordinates = new LatLng(Double.valueOf(values[1]), Double.valueOf(values[0]));
 			} else if (Boolean.TRUE.equals(tags.get("LinearRing"))) {
 				String[] coordinates = value.trim().split(" ");
 				
-				List<GeoPoint> points = new ArrayList<GeoPoint>();
+				List<LatLng> points = new ArrayList<LatLng>();
 				for (String current : coordinates) {
 					String[] coordinate = current.trim().split(",");
-					GeoPoint point = new GeoPoint((int) (Double.valueOf(coordinate[0]) * 1E6), (int) (Double.valueOf(coordinate[1]) * 1E6));
+					LatLng point = new LatLng(Double.valueOf(coordinate[1]), Double.valueOf(coordinate[0]));
 					points.add(point);
 				}
 				
 				if (Boolean.TRUE.equals(tags.get("outerBoundaryIs"))) {
 					OuterBoundaryIs outer = new OuterBoundaryIs();
-					outer.linearRing.coordinates = points.toArray(new GeoPoint[]{});
+					outer.linearRing.coordinates = points.toArray(new LatLng[]{});
 					polygon.outerBoundaryIs = outer;
 				} else if (Boolean.TRUE.equals(tags.get("innerBoundaryIs"))) {
 					InnerBoundaryIs inner = new InnerBoundaryIs();
-					inner.linearRing.coordinates = points.toArray(new GeoPoint[]{});
+					inner.linearRing.coordinates = points.toArray(new LatLng[]{});
 					polygon.innerBoundaryIs.add(inner);
 				}
 			}

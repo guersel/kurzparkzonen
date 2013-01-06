@@ -10,6 +10,9 @@ import org.saabo.parkingzone.ParkingzoneApplication;
 
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.VisibleRegion;
 import com.google.android.maps.GeoPoint;
 
 /**
@@ -57,15 +60,19 @@ public final class URLUtil {
 		return wmsUrl;
 	}
 	
-	public static String getKMLUrl(final GeoPoint leftTop, final GeoPoint rightBottom) {
+	public static String getKMLUrl(final VisibleRegion visibleRegion) {
 		String kmlUrlUnformatted = SharedPreferencesUtil.getString(ParkingzoneApplication.getAppContext(), Constants.SharedPreferences.SHARED_PREFERENCES_URL, Constants.SharedPreferences.URL_KML);
 		
-		final float leftTopLongitude = (float) (leftTop.getLongitudeE6()/1E6);
-		final float leftTopLatitude = (float) (leftTop.getLatitudeE6()/1E6);
-		final float rightBottomLongitude = (float) (rightBottom.getLongitudeE6()/1E6);
-		final float rightBottomLatitude = (float) (rightBottom.getLatitudeE6()/1E6);
+		LatLngBounds latLngBounds = visibleRegion.latLngBounds;
+		LatLng northeast = latLngBounds.northeast;
+		LatLng southwest = latLngBounds.southwest;
 		
-		String kmlUrl = String.format(Locale.US, kmlUrlUnformatted, rightBottomLatitude, leftTopLongitude, leftTopLatitude, rightBottomLongitude);
+		String kmlUrl = String.format(Locale.US, kmlUrlUnformatted, southwest.latitude, southwest.longitude, northeast.latitude, northeast.longitude);
 		return kmlUrl;
+	}
+	
+	public static String getKMLUrlWien() {
+		String kmlUrlWien = SharedPreferencesUtil.getString(ParkingzoneApplication.getAppContext(), Constants.SharedPreferences.SHARED_PREFERENCES_URL, Constants.SharedPreferences.URL_KML_WIEN);
+		return kmlUrlWien;
 	}
 }

@@ -13,6 +13,7 @@ public final class Constants {
 		public static final String URL_GOOGLE_GEOCODE_ADDRESS = "URL_GOOGLE_GEOCODE_ADDRESS";
 		public static final String URL_WMS = "URL_WMS";
 		public static final String URL_KML = "URL_KML";
+		public static final String URL_KML_WIEN = "URL_KML_WIEN";
 	}
 	
 }

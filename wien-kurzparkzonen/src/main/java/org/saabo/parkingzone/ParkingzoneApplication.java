@@ -24,13 +24,11 @@ public class ParkingzoneApplication extends Application {
 		SharedPreferencesUtil.putString(context, Constants.SharedPreferences.SHARED_PREFERENCES_URL, 
 				Constants.SharedPreferences.URL_GOOGLE_GEOCODE_ADDRESS, 
 				"http://maps.google.com/maps/api/geocode/json?language=de&components=country:Austria|administrative_area:Wien&sensor=false&address=");
-		// URL of WMS (Web Map Service) service
-		SharedPreferencesUtil.putString(context, Constants.SharedPreferences.SHARED_PREFERENCES_URL, 
-				Constants.SharedPreferences.URL_WMS, 
-				"http://data.wien.gv.at/daten/wms?request=GetMap&version=1.1.1&width=%d&height=%d&layers=KURZPARKZONEOGD&styles=&format=image/gif&bbox=%f,%f,%f,%f&srs=EPSG:4326");
-		
 		SharedPreferencesUtil.putString(context, Constants.SharedPreferences.SHARED_PREFERENCES_URL, Constants.SharedPreferences.URL_KML, 
 				"http://data.wien.gv.at/daten/geoserver/ows?version=1.3.0&service=WMS&request=GetMap&crs=EPSG:4326&bbox=%f,%f,%f,%f&width=1&height=1&layers=ogdwien:KURZPARKZONEOGD&styles=&format=application/vnd.google-earth.kml+xml");
+		
+		SharedPreferencesUtil.putString(context, Constants.SharedPreferences.SHARED_PREFERENCES_URL, Constants.SharedPreferences.URL_KML_WIEN,
+				"http://data.wien.gv.at/daten/geoserver/ows?version=1.3.0&service=WMS&request=GetMap&crs=EPSG:4326&bbox=48.10,16.16,48.34,16.59&width=1&height=1&layers=ogdwien:KURZPARKZONEOGD&styles=&format=application/vnd.google-earth.kml+xml");
 	}
 	
 	public static Context getAppContext() {

@@ -1,9 +1,13 @@
 package org.saabo.parkingzone.activity;
 
+import org.saabo.android.support.message.MessageHelper;
 import org.saabo.parkingzone.R;
 import org.saabo.parkingzone.controller.StreetMapController;
 import org.saabo.parkingzone.map.WMSOverlay;
+import org.saabo.parkingzone.util.GeoConstants;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +17,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -29,47 +39,50 @@ public class StreetMapActivity extends MapActivity {
 
 	private final static String TAG = StreetMapActivity.class.getName();
 	public static final String INTENT_PARAM_ADDRESS = "address";
-	private MapView mapView;
-	private MapController mapController;
-	private MyLocationOverlay myLocationOverlay;
-	private boolean locationProviderAvailable;
 	private StreetMapController controller;
 	private ProgressDialog progressDialog;
-	private WMSOverlay wmsOverlay;
+	private MapFragment mapFragment;
+	private GoogleMap googleMap;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate()");
-        setContentView(R.layout.map);
+        setContentView(R.layout.mapv2);
         
         controller = new StreetMapController(this);
         
-        initMapView(); 
+        if (!initGoogleMap()) {
+        	finish();
+        	return;
+        }      
         
-        initMyLocationOverlay();        
+        setNextChangeListener();
+        
+        LatLng location = new LatLng(48.217353, 16.373062);
+		updateMapPosition(location, 12);
     }
 
-    // Initial Google map view
-	private void initMapView() {
-    	mapView = (MapView) findViewById(R.id.mapview);
-    	mapController = mapView.getController();
-    	
-        mapView.setBuiltInZoomControls(true);
-	}
-    
-	// Allow to update the current location on the map view
-    private void initMyLocationOverlay() {
-    	myLocationOverlay = new MyLocationOverlay(this, mapView) {
-    		@Override
-    		public synchronized void onLocationChanged(Location location) {
-    			super.onLocationChanged(location);
-    			
-    			GeoPoint geoPoint = new GeoPoint((int) (location.getLatitude() * 1E6), (int) (location.getLongitude() * 1E6));
-    			mapController.animateTo(geoPoint);
-    		}
-    	};
-    	mapView.getOverlays().add(myLocationOverlay);
+    /**
+     * Initialize google maps
+     * @return true if initialization was successful otherwise false
+     */
+    private boolean initGoogleMap() {
+    	// Get google maps from the fragment
+    	mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map); 
+        googleMap = mapFragment.getMap();
+        
+        if (googleMap == null) {
+        	MessageHelper.showLongMessage(this, R.string.error_no_google_maps);
+        	return false;
+        }
+        // Show the road map on google map view
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        
+        googleMap.setMyLocationEnabled(true);    
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(GeoConstants.LOCATION_WIEN));
+                
+        return true;
     }
     
     /**
@@ -91,10 +104,6 @@ public class StreetMapActivity extends MapActivity {
     protected void onResume() {
     	super.onResume();
     	Log.d(TAG, "onResume()");
-    	
-    	//this.locationProviderAvailable = myLocationOverlay.enableMyLocation();
-    	Log.d(TAG, this.locationProviderAvailable ? "Location provider found" : "Location provider not found");
-    	myLocationOverlay.enableCompass(); // shows the compass on the map view
     }
     
     /**
@@ -105,29 +114,39 @@ public class StreetMapActivity extends MapActivity {
     	super.onNewIntent(intent);
     	Log.d(TAG, "onNewIntent()");
     	
+    	setNextChangeListener();
+    	
     	// Start progress bar
     	controller.handleAddressUpdateIntent(intent);
     }
     
+    /** **/
+    private void setNextChangeListener() {
+    	googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+			
+			@Override
+			public void onCameraChange(CameraPosition cameraPosition) {
+				Log.d(TAG, "Google maps camera position changed");
+				//controller.fetchParkzoneData(googleMap.getProjection().getVisibleRegion());
+				controller.fetchParkzoneDataWien();
+				googleMap.setOnCameraChangeListener(null);
+			}
+		});
+    }
+    
     /**
      * Will be called by the controller.
-     * @param geoPoint The <code>GeoPoint</code> data holds latitude and longitude information
+     * @param location The <code>GeoPoint</code> data holds latitude and longitude information
      * @param zoomLevel The zoom level of the map view
      */
-    public void updateMapPosition(final GeoPoint geoPoint, final int zoomLevel) {
-		mapController.animateTo(geoPoint);
-    	mapController.setZoom(zoomLevel);
+    public void updateMapPosition(final LatLng location, final int zoomLevel) {
+    	CameraPosition cp = CameraPosition.fromLatLngZoom(location, zoomLevel);
+    	googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cp));    	
 	}
     
-    public void updateWMSOverlay(final Bitmap bitmap) {
-    	if (mapView.getOverlays().contains(wmsOverlay)) {
-    		mapView.getOverlays().remove(wmsOverlay);
-    	}    	
-    	wmsOverlay = new WMSOverlay(bitmap);
-    	mapView.getOverlays().add(wmsOverlay);
-    	mapView.postInvalidate();
-    	
-    }
+    public void drawPolygon(final PolygonOptions polygonOptions) {
+		googleMap.addPolygon(polygonOptions);
+	}
     
     /**
      * Will be called by the controller.
@@ -156,9 +175,6 @@ public class StreetMapActivity extends MapActivity {
     protected void onPause() {
     	super.onPause();
     	Log.d(TAG, "onPause()");
-    	
-    	myLocationOverlay.disableMyLocation();
-    	myLocationOverlay.disableCompass();
     }
     
     @Override
@@ -216,12 +232,9 @@ public class StreetMapActivity extends MapActivity {
     		return super.onOptionsItemSelected(item);
     	}
     }
-    
-    public boolean isLocationProviderAvailable() {
-		return locationProviderAvailable;
+
+	public GoogleMap getGoogleMap() {
+		return googleMap;
 	}
 
-	public MapView getMapView() {
-		return mapView;
-	}
 }

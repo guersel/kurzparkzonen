@@ -13,6 +13,7 @@
     <string name="error_io_exception">Connection refused</string>
     <string name="error_no_intent_action">Unknown request</string>
     <string name="error_search_unknow_reason">Search canceled, unknown reason. Try it again later!</string>
+    <string name="error_no_google_maps">Google Maps not found!</string>
 
     <!-- View -->
     <string name="empty_list">No data</string>

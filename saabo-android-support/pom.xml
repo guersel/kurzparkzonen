@@ -44,6 +44,12 @@
 			<version>${google.gson.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>google-play-services_lib</groupId>
+			<artifactId>google-play-services_lib</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>

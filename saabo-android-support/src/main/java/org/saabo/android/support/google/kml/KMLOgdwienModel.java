@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.graphics.Color;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.maps.GeoPoint;
 
 /**
@@ -68,7 +69,7 @@ public class KMLOgdwienModel {
 		public List<Polygon> polygon = new ArrayList<Polygon>();
 		
 		public static class Point {
-			public GeoPoint coordinates;
+			public LatLng coordinates;
 		}
 		
 		public static class Polygon {
@@ -85,7 +86,7 @@ public class KMLOgdwienModel {
 		}
 		
 		public static class LinearRing {
-			public GeoPoint[] coordinates;
+			public LatLng[] coordinates;
 		}
 	}
 }
