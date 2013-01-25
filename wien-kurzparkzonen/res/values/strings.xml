@@ -1,8 +1,8 @@
 <resources>
 
-    <string name="app_name">Wien-Kurzparkzonen</string>
+    <string name="app_name">Vienna parkingzones</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_map">Map</string>
+    <string name="title_activity_map">Vienna parkingzones</string>
     <string name="search_hint">Search Address</string>
     
     <!-- Menu -->
@@ -14,8 +14,13 @@
     <string name="error_no_intent_action">Unknown request</string>
     <string name="error_search_unknow_reason">Search canceled, unknown reason. Try it again later!</string>
     <string name="error_no_google_maps">Google Maps not found!</string>
+    <string name="search">Search</string>
+    <string name="search_address">Search for address</string>
+    <string name="search_parkingzones">Search for parkingzones</string>
 
     <!-- View -->
-    <string name="empty_list">No data</string>
+    <string name="empty_list"></string>
     
+    <!-- Button -->
+    <string name="cancel">cancel</string>
 </resources>

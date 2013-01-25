@@ -99,7 +99,7 @@ public class AddressSearchableActivity extends ListActivity {
 	 */
 	public void showProgressDialog() {
 		dismissProgressDialog();
-		progressDialog = new ProgressDialog(this).show(this, "Search", "search for address");
+		progressDialog = new ProgressDialog(this).show(this, getString(R.string.search), getString(R.string.search_address));
 	}
 	
 	/**

@@ -34,6 +34,10 @@ public final class AddressModelUtil {
 				AddressModel address = new AddressModel();
 				
 				for(AddressComponents addressComponents : result.addressComponents) {
+					if (addressComponents.types.size() <= 0) {
+						continue;
+					}
+					
 					String type = addressComponents.types.get(0);
 					
 					if (AddressComponents.TYPE_ROUTE.equals(type)) {

@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="app_name">Wien-Kurzparkzonen</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_map">Wien-Kurzparkzonen</string>
+    <string name="search_hint">Suche Adresse</string>
+    
+    <!-- Menu -->
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_search">Suche</string>
+    
+    <!-- Messages -->
+    <string name="error_io_exception">Verbindung abgebrochen</string>
+    <string name="error_no_intent_action">Unbekannte Anforderungen</string>
+    <string name="error_search_unknow_reason">Suche abgebrochen. Versuchen Sie es später noch einmal!</string>
+    <string name="error_no_google_maps">Google Maps nicht gefunden!</string>
+    <string name="search">Suche</string>
+    <string name="search_address">Suche Adresse</string>
+    <string name="search_parkingzones">Suche nach Parkzonen</string>
+
+    <!-- View -->
+    <string name="empty_list"></string>
+    
+    <!-- Button -->
+    <string name="cancel">Abbrechen</string>
+</resources>
+

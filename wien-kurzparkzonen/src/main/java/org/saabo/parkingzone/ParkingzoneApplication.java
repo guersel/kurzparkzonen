@@ -1,6 +1,7 @@
 package org.saabo.parkingzone;
 
 import org.saabo.android.support.setting.SharedPreferencesUtil;
+import org.saabo.parkingzone.db.ParkingzoneService;
 
 import android.app.Application;
 import android.content.Context;
@@ -14,7 +15,7 @@ import android.content.Context;
 public class ParkingzoneApplication extends Application {
 	
 	private static Context context = null;
-		
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -29,6 +30,8 @@ public class ParkingzoneApplication extends Application {
 		
 		SharedPreferencesUtil.putString(context, Constants.SharedPreferences.SHARED_PREFERENCES_URL, Constants.SharedPreferences.URL_KML_WIEN,
 				"http://data.wien.gv.at/daten/geoserver/ows?version=1.3.0&service=WMS&request=GetMap&crs=EPSG:4326&bbox=48.10,16.16,48.34,16.59&width=1&height=1&layers=ogdwien:KURZPARKZONEOGD&styles=&format=application/vnd.google-earth.kml+xml");
+		
+		
 	}
 	
 	public static Context getAppContext() {

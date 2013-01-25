@@ -76,6 +76,7 @@ public class AddressSearchableController {
 		Intent intent = new Intent(view, StreetMapActivity.class);
 		intent.putExtra(StreetMapActivity.INTENT_PARAM_ADDRESS, selectedAddress);
 		intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		view.finish();
 		view.startActivity(intent);
 	}
 	

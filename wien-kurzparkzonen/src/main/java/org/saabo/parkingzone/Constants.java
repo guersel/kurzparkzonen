@@ -7,6 +7,8 @@ package org.saabo.parkingzone;
  */
 public final class Constants {
 	
+	public static final String FILENAME_WIEN_PARKZONE = "wien.kml";
+	
 	/** Constants for shared preferences. **/
 	public final static class SharedPreferences {
 		public static final String SHARED_PREFERENCES_URL = "SHARED_PREFERENCES_URL";
