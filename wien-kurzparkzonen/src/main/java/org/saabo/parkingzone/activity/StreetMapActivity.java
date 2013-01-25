@@ -17,6 +17,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +57,7 @@ public class StreetMapActivity extends MapActivity {
 	private ProgressDialog progressDialog;
 	private MapFragment mapFragment;
 	private GoogleMap googleMap;
+	private PopupWindow popup;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,7 +113,7 @@ public class StreetMapActivity extends MapActivity {
 				webView.setWebChromeClient(new WebChromeClient());
 				webView.loadData(marker.getSnippet(), "text/html; charset=UTF-8", null);
 				
-				final PopupWindow popup = new PopupWindow(view, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				popup = new PopupWindow(view, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				popup.showAtLocation(view, Gravity.CENTER, 0, 0);
 				
 				Button button = (Button) view.findViewById(R.id.cancel);
@@ -265,6 +267,16 @@ public class StreetMapActivity extends MapActivity {
     	Log.d(TAG, "onRestoreInstanceState()");
     }
     
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+    		if (popup != null && popup.isShowing()) {
+    			popup.dismiss();
+    			return true;
+    		}
+    	}
+    	return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -17,6 +17,7 @@
     <string name="search">Search</string>
     <string name="search_address">Search for address</string>
     <string name="search_parkingzones">Search for parkingzones</string>
+    <string name="marker_title_search">Search result</string>
 
     <!-- View -->
     <string name="empty_list"></string>

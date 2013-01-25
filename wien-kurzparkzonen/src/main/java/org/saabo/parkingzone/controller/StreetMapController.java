@@ -50,6 +50,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -93,6 +94,13 @@ public class StreetMapController {
 					.getVisibleRegion();
 			Log.d(TAG, visibleRegion.toString());
 
+			MarkerOptions markerOptions = new MarkerOptions();
+			markerOptions.position(location);
+			markerOptions.title(view.getString(R.string.marker_title_search));
+			markerOptions.snippet(address.getFormattedAddress());
+			markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+			
+			view.drawMarker(markerOptions);
 			view.updateMapPosition(location, 17);
 		}
 	}
